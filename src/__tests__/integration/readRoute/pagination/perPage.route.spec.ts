@@ -1,12 +1,12 @@
-import supertest from 'supertest';
-import { DataSource } from 'typeorm';
-import app from '../../../../app';
-import { AppDataSource } from '../../../../data-source';
-import { readRouteMock } from '../../../mocks';
+import supertest from "supertest";
+import { DataSource } from "typeorm";
+import app from "../../../../app";
+import { AppDataSource } from "../../../../data-source";
+import { readRouteMock } from "../../../mocks";
 
-describe('Tests on route: GET /movies. Must be able to list all movies.', () => {
+describe("Tests on route: GET /movies. Must be able to list all movies.", () => {
   let connection: DataSource;
-  const baseUrl: string = '/movies';
+  const baseUrl: string = "/movies";
   let readRoutePaginationMocks: { [key: string]: any };
 
   beforeAll(async () => {
@@ -19,10 +19,11 @@ describe('Tests on route: GET /movies. Must be able to list all movies.', () => 
   });
 
   afterAll(async () => {
+    await connection.dropDatabase();
     await connection.destroy();
   });
 
-  it('Without query parameters', async () => {
+  it("Without query parameters", async () => {
     const response = await supertest(app).get(baseUrl);
 
     const expectResults = {
@@ -37,7 +38,7 @@ describe('Tests on route: GET /movies. Must be able to list all movies.', () => 
   });
 
   it("Query parameters: 'perPage' equals 0 and without 'page'", async () => {
-    const response = await supertest(app).get(baseUrl + '?perPage=0');
+    const response = await supertest(app).get(baseUrl + "?perPage=0");
 
     const expectResults = {
       status: 200,
@@ -51,7 +52,7 @@ describe('Tests on route: GET /movies. Must be able to list all movies.', () => 
   });
 
   it("Query parameters: 'perPage' equals 1 and without 'page'", async () => {
-    const response = await supertest(app).get(baseUrl + '?perPage=1');
+    const response = await supertest(app).get(baseUrl + "?perPage=1");
 
     const expectResults = {
       status: 200,
@@ -65,7 +66,7 @@ describe('Tests on route: GET /movies. Must be able to list all movies.', () => 
   });
 
   it("Query parameters: 'perPage' equals 3 and without 'page'", async () => {
-    const response = await supertest(app).get(baseUrl + '?perPage=3');
+    const response = await supertest(app).get(baseUrl + "?perPage=3");
 
     const expectResults = {
       status: 200,
@@ -79,7 +80,7 @@ describe('Tests on route: GET /movies. Must be able to list all movies.', () => 
   });
 
   it("Query parameters: 'perPage' equals 5 and without 'page'", async () => {
-    const response = await supertest(app).get(baseUrl + '?perPage=5');
+    const response = await supertest(app).get(baseUrl + "?perPage=5");
 
     const expectResults = {
       status: 200,
@@ -93,7 +94,7 @@ describe('Tests on route: GET /movies. Must be able to list all movies.', () => 
   });
 
   it("Query parameters: 'perPage' equals 6 and without 'page'", async () => {
-    const response = await supertest(app).get(baseUrl + '?perPage=6');
+    const response = await supertest(app).get(baseUrl + "?perPage=6");
 
     const expectResults = {
       status: 200,
@@ -108,7 +109,7 @@ describe('Tests on route: GET /movies. Must be able to list all movies.', () => 
 
   it("Query parameters: 'perPage' equals 'invalidInput' and without 'page'", async () => {
     const response = await supertest(app).get(
-      baseUrl + '?perPage=invalidInput'
+      baseUrl + "?perPage=invalidInput"
     );
 
     const expectResults = {
@@ -123,7 +124,7 @@ describe('Tests on route: GET /movies. Must be able to list all movies.', () => 
   });
 
   it("Query parameters: 'perPage' equals -1 and without 'page'", async () => {
-    const response = await supertest(app).get(baseUrl + '?perPage=-1');
+    const response = await supertest(app).get(baseUrl + "?perPage=-1");
 
     const expectResults = {
       status: 200,
